@@ -1,0 +1,25 @@
+name: Auto Pusher
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *' # every day at 06:00 UTC
+
+jobs:
+  trigger-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Create empty commit to trigger deployment
+        run: |
+          BRANCH="${{ github.ref_name }}"
+          git commit --allow-empty -m "chore(ci): auto trigger deploy $(date -u +'%Y-%m-%dT%H:%M:%SZ')" || true
+          git push origin "${BRANCH}" || true
+
