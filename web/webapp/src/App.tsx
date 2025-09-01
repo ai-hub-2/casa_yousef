@@ -1,6 +1,29 @@
+import { useEffect, useState } from 'react'
 import './App.css'
 
+type RecordItem = { id: number; name: string; note?: string; created_at?: string }
+
 function App() {
+	const [records, setRecords] = useState<RecordItem[]>([])
+	const [loading, setLoading] = useState<boolean>(true)
+	const [error, setError] = useState<string | null>(null)
+
+	useEffect(() => {
+		const load = async () => {
+			try {
+				const res = await fetch('/api/records?limit=10')
+				if (!res.ok) throw new Error(`HTTP ${res.status}`)
+				const data = await res.json()
+				setRecords(Array.isArray(data.records) ? data.records : [])
+			} catch (e) {
+				setError(String(e))
+			} finally {
+				setLoading(false)
+			}
+		}
+		load()
+	}, [])
+
 	return (
 		<>
 			<h1>Sky CASA</h1>
@@ -16,10 +39,22 @@ function App() {
 				</a>
 			</div>
 			<hr />
-			<p>
-				إن كنت تبحث عن نسخة ويب، سنقوم بتوفير واجهات على Cloudflare Pages لاحقاً لعرض البيانات
-				وتقارير للقراءة فقط، مع مزامنة من التطبيق المكتبي.
-			</p>
+			<h2>سجل البيانات (قراءة فقط)</h2>
+			{loading ? (
+				<p>جاري التحميل...</p>
+			) : error ? (
+				<p style={{ color: 'red' }}>خطأ: {error}</p>
+			) : (
+				<ul>
+					{records.map((r) => (
+						<li key={r.id}>
+							<strong>{r.name}</strong>
+							{r.note ? ` — ${r.note}` : ''}
+							{r.created_at ? ` (${r.created_at})` : ''}
+						</li>
+					))}
+				</ul>
+			)}
 		</>
 	)
 }
