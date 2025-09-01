@@ -2,8 +2,8 @@
   "name": "sky-casa-pages",
   "private": true,
   "scripts": {
-    "build": "npm --prefix web ci && npm --prefix web run build",
-    "preview": "npm --prefix web run preview",
-    "dev": "npm --prefix web run dev"
+    "build": "npm --prefix web/webapp install --no-audit --no-fund && npm --prefix web/webapp run build && rm -rf dist && mkdir -p dist && cp -r web/webapp/dist/* dist/",
+    "preview": "npm --prefix web/webapp run preview",
+    "dev": "npm --prefix web/webapp run dev"
   }
 }
