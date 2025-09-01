@@ -1,35 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	return (
+		<>
+			<h1>Sky CASA</h1>
+			<p>
+				تطبيق Sky CASA لسطح المكتب. قم بتنزيل الإصدار الرسمي وتشغيله على ويندوز.
+			</p>
+			<div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+				<a href="/downloads/Sky_CASA.exe" download>
+					<button>تنزيل البرنامج (Windows)</button>
+				</a>
+				<a href="https://github.com/ai-hub-2/casa_yousef" target="_blank" rel="noreferrer">
+					<button>الاطلاع على الكود</button>
+				</a>
+			</div>
+			<hr />
+			<p>
+				إن كنت تبحث عن نسخة ويب، سنقوم بتوفير واجهات على Cloudflare Pages لاحقاً لعرض البيانات
+				وتقارير للقراءة فقط، مع مزامنة من التطبيق المكتبي.
+			</p>
+		</>
+	)
 }
 
 export default App
